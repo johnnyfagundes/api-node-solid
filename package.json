@@ -20,6 +20,7 @@
     "@types/node": "18.15.0",
     "@vitest/coverage-c8": "0.29.2",
     "@vitest/ui": "0.29.2",
+    "dayjs": "1.11.7",
     "prisma": "4.11.0",
     "tsup": "6.6.3",
     "tsx": "3.12.3",
