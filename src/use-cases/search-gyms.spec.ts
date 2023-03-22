@@ -6,7 +6,6 @@ let gymsRepository: InMemoryGymsRepository
 let sut: SearchGymsUseCase
 
 describe('Search Gyms Use Case', () => {
-
   beforeEach(async () => {
     gymsRepository = new InMemoryGymsRepository()
     sut = new SearchGymsUseCase(gymsRepository)
@@ -17,27 +16,25 @@ describe('Search Gyms Use Case', () => {
       title: 'JavaScript Gym',
       description: null,
       phone: null,
-      latitude: -45.000,
-      longitude: -45.000
+      latitude: -45.0,
+      longitude: -45.0,
     })
 
     await gymsRepository.create({
       title: 'TypeScript Gym',
       description: null,
       phone: null,
-      latitude: -45.000,
-      longitude: -45.000
+      latitude: -45.0,
+      longitude: -45.0,
     })
 
     const { gyms } = await sut.execute({
       query: 'JavaScript',
-      page: 1
+      page: 1,
     })
 
     expect(gyms).toHaveLength(1)
-    expect(gyms).toEqual([
-      expect.objectContaining({ title: 'JavaScript Gym' }),
-    ])
+    expect(gyms).toEqual([expect.objectContaining({ title: 'JavaScript Gym' })])
   })
 
   it('should be able to fetch paginator gyms search', async () => {
@@ -46,14 +43,14 @@ describe('Search Gyms Use Case', () => {
         title: `JavaScript Gym ${i}`,
         description: null,
         phone: null,
-        latitude: -45.000,
-        longitude: -45.000
+        latitude: -45.0,
+        longitude: -45.0,
       })
     }
 
     const { gyms } = await sut.execute({
       query: 'JavaScript',
-      page: 2
+      page: 2,
     })
 
     expect(gyms).toHaveLength(2)
@@ -62,6 +59,4 @@ describe('Search Gyms Use Case', () => {
       expect.objectContaining({ title: 'JavaScript Gym 22' }),
     ])
   })
-
 })
-

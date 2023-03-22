@@ -8,7 +8,6 @@ let usersRepository: InMemoryUsersRepository
 let sut: RegisterUseCase
 
 describe('Register Use Case', () => {
-
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository()
     sut = new RegisterUseCase(usersRepository)
@@ -18,7 +17,7 @@ describe('Register Use Case', () => {
     const { user } = await sut.execute({
       name: 'John Doe',
       email: 'johndoetest@test.com',
-      password: '123456'
+      password: '123456',
     })
 
     expect(user.id).toEqual(expect.any(String))
@@ -28,12 +27,12 @@ describe('Register Use Case', () => {
     const { user } = await sut.execute({
       name: 'John Doe',
       email: 'johndoetest@test.com',
-      password: '123456'
+      password: '123456',
     })
 
     const isPasswordCorrectlyHashed = await compare(
       '123456',
-      user.password_hash
+      user.password_hash,
     )
 
     expect(isPasswordCorrectlyHashed).toBe(true)
@@ -45,16 +44,15 @@ describe('Register Use Case', () => {
     await sut.execute({
       name: 'John Doe',
       email,
-      password: '123456'
+      password: '123456',
     })
 
     await expect(() =>
       sut.execute({
         name: 'John Doe',
         email,
-        password: '123456'
-      })
+        password: '123456',
+      }),
     ).rejects.toBeInstanceOf(UserAlreadyExistsError)
   })
 })
-

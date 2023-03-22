@@ -8,7 +8,6 @@ import { UsersRepository } from '@/repositories/users-repository'
 let usersRepository: UsersRepository
 let sut: AuthenticateUseCase
 describe('Authenticate Use Case', () => {
-
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository()
     sut = new AuthenticateUseCase(usersRepository)
@@ -18,12 +17,12 @@ describe('Authenticate Use Case', () => {
     await usersRepository.create({
       name: 'John Doe',
       email: 'johndoetest@test.com',
-      password_hash: await hash('123456', 6)
+      password_hash: await hash('123456', 6),
     })
 
     const { user } = await sut.execute({
       email: 'johndoetest@test.com',
-      password: '123456'
+      password: '123456',
     })
 
     expect(user.id).toEqual(expect.any(String))
@@ -33,26 +32,23 @@ describe('Authenticate Use Case', () => {
     await expect(() =>
       sut.execute({
         email: 'wrongemail@gmail.com',
-        password: '123456'
-      })
+        password: '123456',
+      }),
     ).rejects.toBeInstanceOf(InvalidCredentialsError)
-
   })
 
   it('should not be able to authenticate with wrong password', async () => {
     await usersRepository.create({
       name: 'John Doe',
       email: 'johndoetest@test.com',
-      password_hash: await hash('123456', 6)
+      password_hash: await hash('123456', 6),
     })
 
     await expect(() =>
       sut.execute({
         email: 'johndoetest@test.com',
-        password: '1234567'
-      })
+        password: '1234567',
+      }),
     ).rejects.toBeInstanceOf(InvalidCredentialsError)
-
   })
 })
-

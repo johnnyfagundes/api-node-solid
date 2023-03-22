@@ -20,13 +20,14 @@ interface CheckInUseCaseResponse {
 export class CheckInUseCase {
   constructor(
     private checkInsRepository: CheckInsRepository,
-    private gymsRepository: GymsRepository
+    private gymsRepository: GymsRepository,
   ) {}
+
   async execute({
     userId,
     gymId,
     userLongitude,
-    userLatitude
+    userLatitude,
   }: CheckInUseCaseRequest): Promise<CheckInUseCaseResponse> {
     const gym = await this.gymsRepository.findById(gymId)
 
@@ -36,7 +37,10 @@ export class CheckInUseCase {
 
     const distance = getDistanceBetweenCoordinates(
       { latitude: userLatitude, longitude: userLongitude },
-      { latitude: gym.latitude.toNumber(), longitude: gym.longitude.toNumber() }
+      {
+        latitude: gym.latitude.toNumber(),
+        longitude: gym.longitude.toNumber(),
+      },
     )
 
     const MAX_DISTANCE_IN_KILOMETERS = 0.1
@@ -44,7 +48,10 @@ export class CheckInUseCase {
       throw new MaxDistanceError()
     }
 
-    const checkInOnSameDay = await this.checkInsRepository.findByUserIdOnDate(userId, new Date())
+    const checkInOnSameDay = await this.checkInsRepository.findByUserIdOnDate(
+      userId,
+      new Date(),
+    )
 
     if (checkInOnSameDay) {
       throw new MaxNumberOfCheckInsError()

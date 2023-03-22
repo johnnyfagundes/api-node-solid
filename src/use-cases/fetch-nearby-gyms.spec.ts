@@ -6,7 +6,6 @@ let gymsRepository: InMemoryGymsRepository
 let sut: FetchNearbyGymsUseCase
 
 describe('Fetch Nearby Gyms Use Case', () => {
-
   beforeEach(async () => {
     gymsRepository = new InMemoryGymsRepository()
     sut = new FetchNearbyGymsUseCase(gymsRepository)
@@ -31,14 +30,10 @@ describe('Fetch Nearby Gyms Use Case', () => {
 
     const { gyms } = await sut.execute({
       userLatitude: -15.8204482,
-      userLongitude: -48.0656682
+      userLongitude: -48.0656682,
     })
 
     expect(gyms).toHaveLength(1)
-    expect(gyms).toEqual([
-      expect.objectContaining({ title: 'Near Gym' })
-    ])
+    expect(gyms).toEqual([expect.objectContaining({ title: 'Near Gym' })])
   })
-
 })
-

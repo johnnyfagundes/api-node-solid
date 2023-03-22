@@ -6,7 +6,6 @@ let gymsRepository: InMemoryGymsRepository
 let sut: CreateGymUseCase
 
 describe('Create Gym Use Case', () => {
-
   beforeEach(() => {
     gymsRepository = new InMemoryGymsRepository()
     sut = new CreateGymUseCase(gymsRepository)
@@ -17,12 +16,10 @@ describe('Create Gym Use Case', () => {
       title: 'JavaScript Gym',
       description: null,
       phone: null,
-      latitude: -45.000,
-      longitude: -45.000
+      latitude: -45.0,
+      longitude: -45.0,
     })
 
     expect(gym.id).toEqual(expect.any(String))
   })
-
 })
-

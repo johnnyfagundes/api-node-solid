@@ -14,7 +14,10 @@ interface ValidateCheckInUseCaseResponse {
 
 export class ValidateCheckInUseCase {
   constructor(private checkInsRepository: CheckInsRepository) {}
-  async execute({ checkInId }: ValidateCheckInUseCaseRequest): Promise<ValidateCheckInUseCaseResponse> {
+
+  async execute({
+    checkInId,
+  }: ValidateCheckInUseCaseRequest): Promise<ValidateCheckInUseCaseResponse> {
     const checkIn = await this.checkInsRepository.findById(checkInId)
 
     if (!checkIn) {
@@ -23,7 +26,7 @@ export class ValidateCheckInUseCase {
 
     const distanceInMinutesFromCheckInCreation = dayjs(new Date()).diff(
       checkIn.created_at,
-      'minutes'
+      'minutes',
     )
 
     if (distanceInMinutesFromCheckInCreation > 20) {
@@ -35,7 +38,7 @@ export class ValidateCheckInUseCase {
     await this.checkInsRepository.save(checkIn)
 
     return {
-      checkIn
+      checkIn,
     }
   }
 }
