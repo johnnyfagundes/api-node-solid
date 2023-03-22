@@ -8,8 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      api-solid-pg:
-        container_name: api-solid-pg
+      postgres:
         image: bitnami/postgresql
         ports:
           - 5432:5432
@@ -20,6 +19,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18
